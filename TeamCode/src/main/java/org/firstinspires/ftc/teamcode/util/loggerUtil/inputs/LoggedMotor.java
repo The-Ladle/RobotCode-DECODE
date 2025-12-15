@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.util.loggerUtil.inputs;
 import android.util.Log;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.util.hardwareUtil.MotorExEx;
 
 import java.nio.ByteBuffer;
 
@@ -68,7 +69,7 @@ public class LoggedMotor implements StructSerializable {
         this.velocity = velocity;
     }
 
-    public void updateFrom(MotorEx motorEx) {
+    public void updateFrom(MotorExEx motorEx) {
         this.setPower(motorEx.getPower());
         this.setRawTicks(motorEx.getRawTicks());
         this.setDirection(motorEx.getDirection());
