@@ -4,23 +4,10 @@ import org.firstinspires.ftc.teamcode.util.mechanismUtil.GearRatio;
 
 import dev.nextftc.hardware.impl.MotorEx;
 
-public class Encoder {
-    private final MotorEx port;
-    private GearRatio ratio = new GearRatio(1);
+public interface Encoder {
+    public default double getPosition() {}
 
-    public Encoder(String name) {
-        port = new MotorEx(name);
-    }
+    public default double getVelocity() {}
 
-    public double getPosition() {
-        return ratio.applySigned(port.getCurrentPosition());
-    }
-
-    public double getVelocity() {
-        return ratio.applySigned(port.getVelocity());
-    }
-
-    public void setPosition(double position) {
-        port.setCurrentPosition(ratio.inverse().applySigned(position));
-    }
+    public default void setPosition(double position) {}
 }

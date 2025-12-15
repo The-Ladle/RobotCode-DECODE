@@ -10,6 +10,8 @@ import dev.nextftc.hardware.impl.MotorEx;
 public final class MotorExEx {
     private final MotorEx motor;
     private GearRatio ratio = new GearRatio(1);
+    private Optional<PID> pid;
+    private Optional<FF> feedforward;
     private Optional<MotorExEx> leader;
     private Optional<Encoder> externalEncoder;
 
@@ -18,9 +20,16 @@ public final class MotorExEx {
     }
 
     /**
-     * NEEDS to be called if using as a follower motor, using an external encoder, or running a "on-device" PID. Doesn't need to be called with otherwise.
+     * NEEDS to be called if using as a follower motor, using an external encoder, or running a "on-device" control loop. Doesn't need to be called with otherwise.
      */
     public void periodic() {
+        if (pid.isPresent && ff.isEmpty) {
+            double pidCalc = pid.get().calculate();
+            this.setPower(pidCalc);
+        } else if (pid.isPresent && ff.isPresent) {
+            double ffCalc = ff.get().calculate();
+            double pidCalc = pid.get().calculate();
+        }
         leader.ifPresent(motorExEx -> this.motor.setPower(motorExEx.getPower()));
     }
 
@@ -40,5 +49,17 @@ public final class MotorExEx {
 
     public double getPower() {
         return motor.getPower();
+    }
+
+    public double getVelocity() {
+        return ratio.applySigned(motor.getVelocity());
+    }
+
+    public void updatePID(PID pid) {
+        this.pid = Optional.of(pid);
+    }
+
+    public void updateTarget(double target) {
+        this.pid.ifPresent((loop) -> loop.setSetPoint(target));
     }
 }

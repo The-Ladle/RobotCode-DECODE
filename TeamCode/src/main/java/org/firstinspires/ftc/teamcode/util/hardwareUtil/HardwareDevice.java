@@ -21,4 +21,12 @@ public class HardwareDevice {
     public CRServoEx crservo() {
         return new CRServoEx(name);
     }
+
+    public DigitalEncoder digitalEncoder() {
+        return new DigitalEncoder(name);
+    }
+
+    public AnalogEncoder analogEncoder() {
+        return new AnalogEncoder(name);
+    }
 }
