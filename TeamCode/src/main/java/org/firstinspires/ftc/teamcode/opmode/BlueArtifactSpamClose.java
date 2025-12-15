@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.opmode;
 
 import static dev.nextftc.extensions.pedro.PedroComponent.follower;
 
-import com.acmerobotics.dashboard.canvas.Canvas;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
@@ -13,7 +11,7 @@ import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.pedropathing.Constants;
-import org.firstinspires.ftc.teamcode.subsystem.Intake;
+import org.firstinspires.ftc.teamcode.subsystem.rollers.intake.Intake;
 import org.firstinspires.ftc.teamcode.subsystem.LauncherOuttakeFuckingThing;
 import org.firstinspires.ftc.teamcode.subsystem.Turret;
 import org.firstinspires.ftc.teamcode.subsystem.VisionDistanceHelper;

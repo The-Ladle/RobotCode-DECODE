@@ -13,7 +13,7 @@ import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.pedropathing.Constants;
-import org.firstinspires.ftc.teamcode.subsystem.Intake;
+import org.firstinspires.ftc.teamcode.subsystem.rollers.intake.Intake;
 import org.firstinspires.ftc.teamcode.subsystem.LauncherOuttakeFuckingThing;
 import org.firstinspires.ftc.teamcode.subsystem.Turret;
 import org.firstinspires.ftc.teamcode.subsystem.VisionDistanceHelper;
@@ -22,7 +22,6 @@ import java.util.List;
 
 import dev.nextftc.bindings.BindingManager;
 import dev.nextftc.core.commands.Command;
-import dev.nextftc.core.commands.groups.ParallelGroup;
 import dev.nextftc.core.commands.groups.SequentialGroup;
 import dev.nextftc.core.commands.utility.LambdaCommand;
 import dev.nextftc.core.commands.delays.Delay;

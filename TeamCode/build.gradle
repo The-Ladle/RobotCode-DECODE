@@ -33,6 +33,8 @@ android {
 repositories {
     maven { url = 'https://maven.pedropathing.com' }
     maven { url = "https://mymaven.bylazar.com/releases" }
+    maven { url = 'https://jitpack.io' }
+    maven { url = 'https://frcmaven.wpi.edu/artifactory/release/' }
 }
 dependencies {
     implementation project(':FtcRobotController')
@@ -48,4 +50,13 @@ dependencies {
     implementation("dev.nextftc:ftc:1.0.1")
     implementation("dev.nextftc:hardware:1.0.1")
     implementation ("dev.nextftc.extensions:pedro:1.0.0")
+
+    //WPILib stuff
+    implementation('edu.wpi.first.wpimath:wpimath-java:2025.3.2')
+    implementation('edu.wpi.first.wpiunits:wpiunits-java:2025.3.2')
+    implementation('edu.wpi.first.wpiutil:wpiutil-java:2025.3.2')
+
+    //Logging
+    implementation('com.github.ori-coval.Koala-Log:KoalaLogger:1.4.0')
+    implementation('com.github.ori-coval.Koala-Log:KoalaLoggingProcessor:1.4.0')
 }
