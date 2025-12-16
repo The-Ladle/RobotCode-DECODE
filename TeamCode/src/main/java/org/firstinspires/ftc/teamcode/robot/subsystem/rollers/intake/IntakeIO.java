@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.subsystem.rollers.intake;
 
+import org.firstinspires.ftc.teamcode.util.control.PIDConstants;
 import org.firstinspires.ftc.teamcode.util.loggerUtil.inputs.LoggedMotor;
 
 import Ori.Coval.Logging.AutoLog;
@@ -13,9 +14,13 @@ public interface IntakeIO {
         LoggedMotor intakeTwo = new LoggedMotor();
     }
 
+    public default void periodic() {}
+
     public default void updateInputs(IntakeIOInputs inputs) {}
 
     public default void setRawSpeed(double speed) {}
 
-    public default void setSurfaceSpeed(double speed) {}
+    public default void setSurfaceSpeed(double mps) {}
+
+    public default void updatePID(PIDConstants constants) {}
 }

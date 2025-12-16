@@ -1,22 +1,22 @@
 package org.firstinspires.ftc.teamcode.util.loggerUtil.inputs;
 
+import org.firstinspires.ftc.teamcode.util.hardwareUtil.CRServoExEx;
 import org.firstinspires.ftc.teamcode.util.hardwareUtil.MotorExEx;
 
 import java.nio.ByteBuffer;
 
 import edu.wpi.first.util.struct.Struct;
-import edu.wpi.first.util.struct.StructSerializable;
 
-public class LoggedMotor implements StructSerializable {
+public class LoggedCRServo {
     private double power;
     private double acceleration;
     private double direction;
     private double currentPosition;
     private double velocity;
 
-    public LoggedMotor() {}
+    public LoggedCRServo() {}
 
-    private LoggedMotor(double power, double acceleration, double direction, double currentPosition, double velocity) {
+    private LoggedCRServo(double power, double acceleration, double direction, double currentPosition, double velocity) {
         this.power = power;
         this.acceleration = acceleration;
         this.direction = direction;
@@ -64,7 +64,7 @@ public class LoggedMotor implements StructSerializable {
         this.velocity = velocity;
     }
 
-    public void updateFrom(MotorExEx motorEx) {
+    public void updateFrom(CRServoExEx motorEx) {
         this.setPower(motorEx.getPower());
         this.setAcceleration(motorEx.getAcceleration());
         this.setDirection(motorEx.getDirection());
@@ -72,12 +72,12 @@ public class LoggedMotor implements StructSerializable {
         this.setVelocity(motorEx.getVelocity());
     }
 
-    public static final LoggedMotorStruct struct = new LoggedMotorStruct();
-    public static class LoggedMotorStruct implements Struct<LoggedMotor> {
+    public static final LoggedCRServo.LoggedCRServoStruct struct = new LoggedCRServo.LoggedCRServoStruct();
+    public static class LoggedCRServoStruct implements Struct<LoggedCRServo> {
 
         @Override
-        public Class<LoggedMotor> getTypeClass() {
-            return LoggedMotor.class;
+        public Class<LoggedCRServo> getTypeClass() {
+            return LoggedCRServo.class;
         }
 
         @Override
@@ -96,17 +96,17 @@ public class LoggedMotor implements StructSerializable {
         }
 
         @Override
-        public LoggedMotor unpack(ByteBuffer bb) {
+        public LoggedCRServo unpack(ByteBuffer bb) {
             var power = bb.getDouble();
             var acceleration = bb.getDouble();
             var direction = bb.getDouble();
             var currentPosition = bb.getDouble();
             var velocity = bb.getDouble();
-            return new LoggedMotor(power, acceleration, direction, currentPosition, velocity);
+            return new LoggedCRServo(power, acceleration, direction, currentPosition, velocity);
         }
 
         @Override
-        public void unpackInto(LoggedMotor out, ByteBuffer bb) {
+        public void unpackInto(LoggedCRServo out, ByteBuffer bb) {
             out.setPower(bb.getDouble());
             out.setAcceleration(bb.getDouble());
             out.setDirection((int) bb.getDouble());
@@ -115,7 +115,7 @@ public class LoggedMotor implements StructSerializable {
         }
 
         @Override
-        public void pack(ByteBuffer bb, LoggedMotor value) {
+        public void pack(ByteBuffer bb, LoggedCRServo value) {
             bb.putDouble(value.getPower());
             bb.putDouble(value.getAcceleration());
             bb.putDouble(value.getDirection());

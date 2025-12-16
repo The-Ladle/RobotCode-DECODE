@@ -9,5 +9,7 @@ public interface Encoder {
 
     public default double getVelocity() { return 0; }
 
+    public default double getAcceleration() { return 0; }
+
     public default void setPosition(double position) {}
 }

@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.util.hardwareUtil;
 
-import dev.nextftc.hardware.impl.CRServoEx;
-import dev.nextftc.hardware.impl.ServoEx;
+import com.seattlesolvers.solverslib.hardware.motors.CRServoEx;
+import com.seattlesolvers.solverslib.hardware.servos.ServoEx;
+
+import org.firstinspires.ftc.teamcode.robot.constants.HardwareDevices;
 
 public class HardwareDevice {
     private final String name;
@@ -15,18 +17,16 @@ public class HardwareDevice {
     }
 
     public ServoEx servo() {
-        return new ServoEx(name);
+        return new ServoEx(HardwareDevices.hardwareMap, name);
     }
 
     public CRServoEx crservo() {
-        return new CRServoEx(name);
+        return new CRServoEx(HardwareDevices.hardwareMap, name);
     }
 
     public DigitalEncoder digitalEncoder() {
         return new DigitalEncoder(name);
     }
 
-    public AnalogEncoder analogEncoder() {
-        return new AnalogEncoder(name);
-    }
+    public AnalogEncoder analogEncoder() { return new AnalogEncoder(name); }
 }

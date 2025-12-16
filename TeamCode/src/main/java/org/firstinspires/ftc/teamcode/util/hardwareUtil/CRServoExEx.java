@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.util.hardwareUtil;
 
 import static edu.wpi.first.units.Units.Seconds;
 
-import com.seattlesolvers.solverslib.hardware.motors.Motor;
+import com.seattlesolvers.solverslib.hardware.motors.CRServoEx;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 import org.firstinspires.ftc.teamcode.robot.RobotState;
@@ -19,9 +19,8 @@ import org.firstinspires.ftc.teamcode.util.mechanismUtil.GearRatio;
 
 import java.util.Optional;
 
-
-public final class MotorExEx {
-    private final MotorEx motor;
+public class CRServoExEx {
+    private final CRServoEx motor;
     private InvertType invertType;
     private ControlType controlType;
     private GearRatio ratio = new GearRatio(1);
@@ -33,20 +32,29 @@ public final class MotorExEx {
     private Optional<Encoder> externalEncoder;
     private double profileStartTime = -1;
     private MotionProfile.State startState = new MotionProfile.State(0, 0);
+    private double lastTime = 0;
+    private double lastVelocity = 0;
+    private double acceleration = 0;
 
-    public MotorExEx(String name) {
-        this.motor = new MotorEx(HardwareDevices.hardwareMap, name);
+    public CRServoExEx(String name) {
+        this.motor = new CRServoEx(HardwareDevices.hardwareMap, name);
     }
 
     /**
-     * NEEDS to be called if using as a follower motor, using an external encoder, or running a "on-device" control loop. Doesn't need to be called with otherwise.
+     * NEEDS to be called if using as a follower motor, using an external encoder, running a "on-device" control loop, or getting acceleration. Doesn't need to be called with otherwise.
      */
     public void periodic() {
+        var time = RobotState.getInstance().getElapsedTime().in(Seconds);
+        var velo = motor.getCorrectedVelocity();
+        acceleration = (velo - lastVelocity) / (time - lastTime);
+        lastVelocity = velo;
+        lastTime = time;
+
         MotionProfile.State measuredState;
         if (controlType == ControlType.POSITION) {
             measuredState = new MotionProfile.State(this.getCurrentPosition(), this.getVelocity());
         } else {
-           measuredState = new MotionProfile.State(this.getVelocity(), this.getAcceleration());
+            measuredState = new MotionProfile.State(this.getVelocity(), this.getAcceleration());
         }
 
         double power = 0.0;
@@ -120,11 +128,11 @@ public final class MotorExEx {
     }
 
     public double getVelocity() {
-        return externalEncoder.map(Encoder::getVelocity).orElseGet(() -> ratio.applySigned(motor.getVelocity()));
+        return externalEncoder.map(Encoder::getVelocity).orElseGet(() -> ratio.applySigned(motor.getCorrectedVelocity()));
     }
 
     public double getAcceleration() {
-        return externalEncoder.map(Encoder::getAcceleration).orElseGet(() -> ratio.applySigned(motor.getAcceleration()));
+        return externalEncoder.map(Encoder::getAcceleration).orElseGet(() -> ratio.applySigned(acceleration));
     }
 
     public void updatePID(PIDConstants pidConstants) {

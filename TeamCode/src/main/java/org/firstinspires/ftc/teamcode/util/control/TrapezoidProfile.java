@@ -2,16 +2,6 @@ package org.firstinspires.ftc.teamcode.util.control;
 
 public class TrapezoidProfile {
 
-    public static class State {
-        public final double position;
-        public final double velocity;
-
-        public State(double position, double velocity) {
-            this.position = position;
-            this.velocity = velocity;
-        }
-    }
-
     private final double maxVelocity;
     private final double maxAcceleration;
 
@@ -24,7 +14,7 @@ public class TrapezoidProfile {
      * Calculate the state at a given time tSecs for a trapezoidal profile
      * from start to end.
      */
-    public State calculate(double tSecs, State start, State end) {
+    public MotionProfile.State calculate(double tSecs, MotionProfile.State start, MotionProfile.State end) {
         double distance = end.position - start.position;
         double direction = Math.signum(distance);
         double v0 = start.velocity * direction;
@@ -66,6 +56,6 @@ public class TrapezoidProfile {
             pos = end.position - (vf * (tDecel - tDecelPhase) + 0.5 * maxAcceleration * (tDecel - tDecelPhase) * (tDecel - tDecelPhase));
         }
 
-        return new State(pos, vel * direction);
+        return new MotionProfile.State(pos, vel * direction);
     }
 }

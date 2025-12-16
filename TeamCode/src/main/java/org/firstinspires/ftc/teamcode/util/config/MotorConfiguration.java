@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.util.config;
 
+import com.seattlesolvers.solverslib.hardware.motors.Motor;
+
 import org.firstinspires.ftc.teamcode.util.hardwareUtil.Encoder;
 import org.firstinspires.ftc.teamcode.util.hardwareUtil.MotorExEx;
 import org.firstinspires.ftc.teamcode.util.mechanismUtil.GearRatio;
@@ -9,6 +11,8 @@ import java.util.Optional;
 public class MotorConfiguration {
     private InvertType inverted;
     private GearRatio ratio;
+    private ControlType controlType;
+    private Motor.ZeroPowerBehavior zeroPowerBehavior;
     private Optional<MotorExEx> leader = Optional.empty();
     private Optional<Encoder> encoder = Optional.empty();
 
@@ -26,6 +30,13 @@ public class MotorConfiguration {
         this.ratio = new GearRatio(reduction);
     }
 
+    public void setControlType(ControlType controlType) {
+        this.controlType = controlType;
+    }
+
+    public void setZeroPowerBehavior(Motor.ZeroPowerBehavior zeroPowerBehavior) {
+        this.zeroPowerBehavior = zeroPowerBehavior;
+    }
     /**
      * Must call MotorExEx.periodic() to function properly
      */
@@ -45,7 +56,17 @@ public class MotorConfiguration {
         return ratio;
     }
 
+    public ControlType getControlType() {
+        return controlType;
+    }
+
+    public Motor.ZeroPowerBehavior getZeroPowerBehavior() {
+        return zeroPowerBehavior;
+    }
+
     public Optional<MotorExEx> getLeader() {
         return this.leader;
     }
+
+    public Optional<Encoder> getEncoder() { return this.encoder; }
 }
